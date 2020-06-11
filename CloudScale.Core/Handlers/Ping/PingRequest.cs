@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace CloudScale.Api.Handlers.Ping
+namespace CloudScale.Core.Handlers.Ping
 {
     public class PingRequest : IRequest<PingResponse>
     {

@@ -5,6 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Ardalis.SmartEnum" Version="1.0.8" />
+      <PackageReference Include="FluentValidation" Version="8.6.2" />
+      <PackageReference Include="MediatR" Version="8.0.1" />
+      <PackageReference Include="NodaTime" Version="3.0.0" />
     </ItemGroup>
 
 </Project>

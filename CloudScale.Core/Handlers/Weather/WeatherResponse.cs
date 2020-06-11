@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NodaTime;
 
-namespace CloudScale.Api.Handlers.Weather
+namespace CloudScale.Core.Handlers.Weather
 {
     public class WeatherResponse: List<WeatherResponse.WeatherForecast>
     {

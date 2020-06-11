@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CloudScale.Api.Handlers.Weather;
+using CloudScale.Core.Handlers.Weather;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +26,6 @@ namespace CloudScale.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<WeatherResponse>> GetWeatherForecast() =>
             Ok(await _mediator.Send(new WeatherRequest()));
     }

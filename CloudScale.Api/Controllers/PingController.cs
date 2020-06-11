@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CloudScale.Api.Handlers.Ping;
-using CloudScale.Api.Handlers.Weather;
+using CloudScale.Core.Handlers.Ping;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +26,6 @@ namespace CloudScale.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<PingResponse>> Ping([FromBody] PingRequest request) =>
             Ok(await _mediator.Send(request));
     }

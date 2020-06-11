@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using CloudScale.Core.Handlers.Ping;
 using CloudScale.Data;
 using EntityFrameworkCore.SqlServer.NodaTime.Extensions;
 using FluentValidation;
@@ -40,8 +41,8 @@ namespace CloudScale.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
-            //     .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
+            services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
+                .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
 
             services.AddRouting(options =>
             {
@@ -49,10 +50,13 @@ namespace CloudScale.Api
                 options.AppendTrailingSlash = false;
             });
 
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-
+            var handlersAssembly = typeof(PingHandler).Assembly;
+            var validatorsAssembly = typeof(PingRequestValidator).Assembly;
+            
+            services.AddMediatR(handlersAssembly);
+            
             services.AddControllers()
-                .AddFluentValidation(o => o.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()))
+                .AddFluentValidation(o => o.RegisterValidatorsFromAssembly(validatorsAssembly))
                 .AddJsonOptions(options =>
                     options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
 
@@ -79,15 +83,15 @@ namespace CloudScale.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseSerilogRequestLogging();
-            
+
             app.UseHttpsRedirection();
 
             app.UseSerilogRequestLogging();
 
             app.UseRouting();
-            
+
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace CloudScale.Api.Handlers.Weather
+namespace CloudScale.Core.Handlers.Weather
 {
     public class WeatherRequestValidator : AbstractValidator<WeatherRequest>
     {

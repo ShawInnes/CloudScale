@@ -3,21 +3,18 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using NodaTime;
 using NodaTime.Extensions;
 
-namespace CloudScale.Api.Handlers.Weather
+namespace CloudScale.Core.Handlers.Weather
 {
     public class WeatherHandler : IRequestHandler<WeatherRequest, WeatherResponse>
     {
         private readonly IClock _clock;
-        private readonly ILogger<WeatherHandler> _logger;
 
-        public WeatherHandler(IClock clock, ILogger<WeatherHandler> logger)
+        public WeatherHandler(IClock clock)
         {
             _clock = clock;
-            _logger = logger;
         }
 
         public Task<WeatherResponse> Handle(WeatherRequest request, CancellationToken cancellationToken)
