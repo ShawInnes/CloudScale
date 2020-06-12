@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CloudScale.ApiClient\CloudScale.ApiClient.csproj" />
       <ProjectReference Include="..\CloudScale.Contracts\CloudScale.Contracts.csproj" />
     </ItemGroup>
 

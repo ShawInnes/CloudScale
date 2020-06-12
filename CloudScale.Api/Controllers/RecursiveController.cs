@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CloudScale.Contracts.Recursive;
 using CloudScale.Contracts.Weather;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace CloudScale.Api.Controllers
 {
     [ApiController]
     [Authorize]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class RecursiveController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public WeatherForecastController(IMediator mediator)
+        public RecursiveController(IMediator mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<WeatherResponse>> GetWeatherForecast() =>
-            Ok(await _mediator.Send(new WeatherRequest()));
+        public async Task<ActionResult<WeatherResponse>> GetRecursive(RecursiveRequest request) =>
+            Ok(await _mediator.Send(request));
     }
 }

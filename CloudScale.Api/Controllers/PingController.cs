@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CloudScale.Contracts.Ping;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,16 +10,15 @@ using Microsoft.Extensions.Logging;
 namespace CloudScale.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class PingController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<PingController> _logger;
 
-        public PingController(IMediator mediator, ILogger<PingController> logger)
+        public PingController(IMediator mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _logger = logger;
         }
 
         [HttpPost]
