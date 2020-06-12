@@ -11,4 +11,8 @@
       <PackageReference Include="NodaTime" Version="3.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\CloudScale.Contracts\CloudScale.Contracts.csproj" />
+    </ItemGroup>
+
 </Project>

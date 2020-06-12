@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CloudScale.Core\CloudScale.Core.csproj" />
+      <ProjectReference Include="..\CloudScale.Business\CloudScale.Business.csproj" />
     </ItemGroup>
 
 </Project>

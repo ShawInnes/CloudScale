@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CloudScale.Core.Handlers.Weather
+namespace CloudScale.Contracts.Weather
 {
     public class WeatherRequest : IRequest<WeatherResponse>
     {

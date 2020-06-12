@@ -2,11 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CloudScale.Contracts.Weather;
 using MediatR;
 using NodaTime;
 using NodaTime.Extensions;
 
-namespace CloudScale.Core.Handlers.Weather
+namespace CloudScale.Business
 {
     public class WeatherHandler : IRequestHandler<WeatherRequest, WeatherResponse>
     {

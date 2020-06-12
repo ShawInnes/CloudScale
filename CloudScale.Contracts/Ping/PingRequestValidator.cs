@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace CloudScale.Core.Handlers.Ping
+namespace CloudScale.Contracts.Ping
 {
     public class PingRequestValidator : AbstractValidator<PingRequest>
     {

@@ -1,4 +1,4 @@
-﻿namespace CloudScale.Core.Handlers.Ping
+﻿namespace CloudScale.Contracts.Ping
 {
     public class PingResponse
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NodaTime;
 
-namespace CloudScale.Core.Handlers.Weather
+namespace CloudScale.Contracts.Weather
 {
     public class WeatherResponse: List<WeatherResponse.WeatherForecast>
     {

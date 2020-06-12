@@ -1,14 +1,14 @@
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CloudScale.Core.Handlers.Ping;
+using CloudScale.Business;
+using CloudScale.Contracts.Ping;
 using FluentAssertions;
 using Xunit;
 
 namespace CloudScale.Tests
 {
-    public class UnitTest1
+    public class PingTests
     {
         [Fact]
         public async Task ShouldPass()

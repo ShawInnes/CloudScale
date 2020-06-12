@@ -1,6 +1,6 @@
 ﻿using Ardalis.SmartEnum;
 
-namespace CloudScale.Core.Handlers.Weather
+namespace CloudScale.Contracts.Weather
 {
     public sealed class WeatherSummaryEnum : SmartEnum<WeatherSummaryEnum>
     {

@@ -1,27 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using CloudScale.Core.Handlers.Ping;
+using CloudScale.Business;
+using CloudScale.Contracts.Ping;
 using CloudScale.Data;
 using EntityFrameworkCore.SqlServer.NodaTime.Extensions;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using NodaTime;
 using NodaTime.Serialization.SystemTextJson;
 using Serilog;
@@ -65,7 +57,7 @@ namespace CloudScale.Api
             services.AddSwaggerDocument();
 
             services.AddDbContext<CloudScaleDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("BloggingDatabase"),
+                options.UseSqlServer(Configuration.GetConnectionString("CloudScaleDatabase"),
                     o =>
                     {
                         o.UseNodaTime();
@@ -102,7 +94,7 @@ namespace CloudScale.Api
             {
                 endpoints.MapControllers();
 
-                endpoints.MapHealthChecks("/liveness", options: new HealthCheckOptions
+                endpoints.MapHealthChecks("/healthz", options: new HealthCheckOptions
                 {
                     Predicate = r => r.Name.Contains("self")
                 });

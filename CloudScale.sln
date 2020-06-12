@@ -4,11 +4,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Api", "CloudScal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Tests", "CloudScale.Tests\CloudScale.Tests.csproj", "{82E0A7AC-E95E-4C40-8A10-FCF90C6C1C17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Core", "CloudScale.Core\CloudScale.Core.csproj", "{A7E96DF2-D58E-41D5-A505-2A80E506EE85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Business", "CloudScale.Business\CloudScale.Business.csproj", "{A7E96DF2-D58E-41D5-A505-2A80E506EE85}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Data", "CloudScale.Data\CloudScale.Data.csproj", "{5EEE1EBF-BC04-422E-A8FD-B8A84842E43A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.ApiClient", "CloudScale.ApiClient\CloudScale.ApiClient.csproj", "{19AA208A-B00E-442E-8406-1D6F87016CD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Contracts", "CloudScale.Contracts\CloudScale.Contracts.csproj", "{4F4EB2CE-44A9-4DBA-A3F5-E97FA28ED6C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Cli", "CloudScale.Cli\CloudScale.Cli.csproj", "{74B5DE7D-9B10-4A52-92AE-E156D38F7F19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +40,13 @@ Global
 		{19AA208A-B00E-442E-8406-1D6F87016CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19AA208A-B00E-442E-8406-1D6F87016CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19AA208A-B00E-442E-8406-1D6F87016CD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F4EB2CE-44A9-4DBA-A3F5-E97FA28ED6C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F4EB2CE-44A9-4DBA-A3F5-E97FA28ED6C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F4EB2CE-44A9-4DBA-A3F5-E97FA28ED6C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F4EB2CE-44A9-4DBA-A3F5-E97FA28ED6C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74B5DE7D-9B10-4A52-92AE-E156D38F7F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74B5DE7D-9B10-4A52-92AE-E156D38F7F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74B5DE7D-9B10-4A52-92AE-E156D38F7F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74B5DE7D-9B10-4A52-92AE-E156D38F7F19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,8 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using CloudScale.Contracts.Ping;
 using MediatR;
 
-namespace CloudScale.Core.Handlers.Ping
+namespace CloudScale.Business
 {
     public class PingHandler : IRequestHandler<PingRequest, PingResponse>
     {
