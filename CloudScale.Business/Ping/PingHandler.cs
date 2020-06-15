@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using CloudScale.Contracts.Ping;
 using MediatR;
 
-namespace CloudScale.Business
+namespace CloudScale.Business.Ping
 {
     public class PingHandler : IRequestHandler<PingRequest, PingResponse>
     {

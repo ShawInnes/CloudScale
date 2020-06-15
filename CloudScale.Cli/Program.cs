@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CloudScale.ApiClient;
 using CloudScale.Contracts.Ping;
+using CloudScale.Contracts.Recursive;
 using CloudScale.Contracts.Weather;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -44,6 +45,9 @@ namespace CloudScale.Cli
             var weatherResponse = await client.GetWeatherForecast(bearerToken, new WeatherRequest());
             Log.Information("Weather Response {@Response}", weatherResponse);
 
+            var recursiveResponse = await client.GetRecursive(bearerToken, new RecursiveRequest() { CurrentDepth = 1, MaxDepth = 5});
+            Log.Information("Recursive Response {@Response}", recursiveResponse);
+            
             Log.Information("Ending CLI");
 
             Log.CloseAndFlush();

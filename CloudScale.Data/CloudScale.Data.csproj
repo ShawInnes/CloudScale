@@ -13,7 +13,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Entities" />
+      <ProjectReference Include="..\CloudScale.Contracts\CloudScale.Contracts.csproj" />
+      <ProjectReference Include="..\CloudScale.Core\CloudScale.Core.csproj" />
     </ItemGroup>
 
 </Project>

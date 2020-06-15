@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using CloudScale.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CloudScale.Data
 {
@@ -9,12 +11,16 @@ namespace CloudScale.Data
         {
         }
 
-        // public DbSet<Blog> Blogs { get; set; }
-        // public DbSet<Post> Posts { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Owner> Owners { get; set; }
+        public DbSet<Property> Properties { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CloudScaleDbContext).Assembly);
         }
     }
 }

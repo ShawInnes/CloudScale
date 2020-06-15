@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CloudScale.Api.Controllers
 {
     [ApiController]
-    [Authorize]
+    // [Authorize]
     [Route("[controller]")]
     public class RecursiveController : ControllerBase
     {

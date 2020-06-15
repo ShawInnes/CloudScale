@@ -1,6 +1,9 @@
 using System;
+using CloudScale.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
@@ -17,13 +20,14 @@ namespace CloudScale.Api
                 .AddEnvironmentVariables()
                 .AddCommandLine(args)
                 .Build();
-            
+
             Log.Logger = new LoggingFactory(configuration)
                 .CreateLogger();
 
             try
             {
                 Log.Information("Starting up");
+
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
@@ -38,7 +42,7 @@ namespace CloudScale.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog() // <- Add this line
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

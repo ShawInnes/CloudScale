@@ -7,7 +7,7 @@ using MediatR;
 using NodaTime;
 using NodaTime.Extensions;
 
-namespace CloudScale.Business
+namespace CloudScale.Business.Weather
 {
     public class WeatherHandler : IRequestHandler<WeatherRequest, WeatherResponse>
     {

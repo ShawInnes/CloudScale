@@ -2,9 +2,9 @@
 
 namespace CloudScale.Contracts.Recursive
 {
-    public class RecursiveRequestValidator : AbstractValidator<RecursiveRequest>
+    public class RecursiveValidator : AbstractValidator<RecursiveRequest>
     {
-        public RecursiveRequestValidator()
+        public RecursiveValidator()
         {
             RuleFor(p => p.CurrentDepth)
                 .GreaterThan(0)

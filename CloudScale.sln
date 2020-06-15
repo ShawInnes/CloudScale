@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Contracts", "Clo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Cli", "CloudScale.Cli\CloudScale.Cli.csproj", "{74B5DE7D-9B10-4A52-92AE-E156D38F7F19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudScale.Core", "CloudScale.Core\CloudScale.Core.csproj", "{04F803B1-4D9C-45DB-B429-EA1AA9D0D5F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{74B5DE7D-9B10-4A52-92AE-E156D38F7F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74B5DE7D-9B10-4A52-92AE-E156D38F7F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74B5DE7D-9B10-4A52-92AE-E156D38F7F19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04F803B1-4D9C-45DB-B429-EA1AA9D0D5F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04F803B1-4D9C-45DB-B429-EA1AA9D0D5F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04F803B1-4D9C-45DB-B429-EA1AA9D0D5F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04F803B1-4D9C-45DB-B429-EA1AA9D0D5F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

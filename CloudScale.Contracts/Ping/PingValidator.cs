@@ -2,9 +2,9 @@
 
 namespace CloudScale.Contracts.Ping
 {
-    public class PingRequestValidator : AbstractValidator<PingRequest>
+    public class PingValidator : AbstractValidator<PingRequest>
     {
-        public PingRequestValidator()
+        public PingValidator()
         {
             RuleFor(m => m.Message)
                 .NotEmpty();

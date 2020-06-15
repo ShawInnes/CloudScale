@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 namespace CloudScale.Api.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class PingController : ControllerBase
     {

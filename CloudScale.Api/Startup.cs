@@ -1,12 +1,22 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using CloudScale.Api.Infrastructure;
+using CloudScale.Api.Middleware;
 using CloudScale.ApiClient;
 using CloudScale.Business;
+using CloudScale.Business.Ping;
 using CloudScale.Contracts.Ping;
+using CloudScale.Core;
 using CloudScale.Data;
+using CloudScale.Data.Repositories;
 using EntityFrameworkCore.SqlServer.NodaTime.Extensions;
 using FluentValidation.AspNetCore;
+using Jaeger;
+using Jaeger.Samplers;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Builder;
@@ -17,12 +27,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using NodaTime;
 using NodaTime.Serialization.SystemTextJson;
 using NSwag;
 using NSwag.AspNetCore;
 using NSwag.Generation.Processors.Security;
+using OpenTracing;
+using OpenTracing.Contrib.NetCore.CoreFx;
+using OpenTracing.Util;
 using Serilog;
 using SystemClock = NodaTime.SystemClock;
 
@@ -45,7 +59,7 @@ namespace CloudScale.Api
         public void ConfigureServices(IServiceCollection services)
         {
             IdentityModelEventSource.ShowPII = true;
-            
+
             services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
                 .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
 
@@ -56,9 +70,17 @@ namespace CloudScale.Api
             });
 
             var handlersAssembly = typeof(PingHandler).Assembly;
-            var validatorsAssembly = typeof(PingRequestValidator).Assembly;
+            var validatorsAssembly = typeof(PingValidator).Assembly;
 
             services.AddMediatR(handlersAssembly);
+
+            services.AddHttpContextAccessor();
+            services.AddTransient<IBearerAccessor, BearerAccessor>();
+            services.AddTransient<IUserAccessor, UserAccessor>();
+
+            services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(PaginationPipeline<,>));
+
+            services.AddTransient<ICloudScaleRepository, CloudScaleRepository>();
 
             services.AddControllers()
                 .AddFluentValidation(o => o.RegisterValidatorsFromAssembly(validatorsAssembly))
@@ -103,19 +125,51 @@ namespace CloudScale.Api
             });
 
             services.AddDbContext<CloudScaleDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("CloudScaleDatabase"),
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("CloudScale"),
                     o =>
                     {
                         o.UseNodaTime();
                         o.EnableRetryOnFailure();
-                    }));
+                    });
+            });
 
             services.AddHealthChecks()
                 .AddCheck("self", () => HealthCheckResult.Healthy());
+
+            services.AddSingleton(Log.Logger);
+
+            Uri jaegerUri = new Uri("http://localhost:14268/api/traces");
+
+            services.AddSingleton(serviceProvider =>
+            {
+                string serviceName = Assembly.GetEntryAssembly()?.GetName().Name;
+
+                ILoggerFactory loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+
+                ISampler sampler = new ConstSampler(sample: true);
+
+                ITracer tracer = new Tracer.Builder(serviceName)
+                    .WithLoggerFactory(loggerFactory)
+                    .WithSampler(sampler)
+                    .Build();
+
+                GlobalTracer.Register(tracer);
+
+                return tracer;
+            });
+
+            // Prevent endless loops when OpenTracing is tracking HTTP requests to Jaeger.
+            services.Configure<HttpHandlerDiagnosticOptions>(options =>
+            {
+                options.IgnorePatterns.Add(request => jaegerUri.IsBaseOf(request.RequestUri));
+            });
+
+            services.AddOpenTracing();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceScopeFactory scopeFactory)
         {
             if (env.IsDevelopment())
             {
@@ -152,6 +206,8 @@ namespace CloudScale.Api
                     Predicate = r => r.Name.Contains("self")
                 });
             });
+
+            app.MigrateDatabase<CloudScaleDbContext>(scopeFactory);
         }
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace CloudScale.Api.Controllers
 {
     [ApiController]
-    [Authorize]
+    // [Authorize]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
