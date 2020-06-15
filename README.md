@@ -9,6 +9,11 @@ Behaviour Testing
 Approval Tests
 Convention Tests
 
+Mass Transit
+
+Mediatr
+Pipeline to do paging on output
+
 Jaeger (tracing)
 docker run -d --name jaeger \
   -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \

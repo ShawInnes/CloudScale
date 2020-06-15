@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -86,6 +87,8 @@ namespace CloudScale.Api
                 .AddFluentValidation(o => o.RegisterValidatorsFromAssembly(validatorsAssembly))
                 .AddJsonOptions(options =>
                     options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
+
+            services.AddResponseCaching();
 
             services.AddTransient<IClock>(provider => SystemClock.Instance);
             services.AddTransient<ICloudScaleClient>(provider =>
@@ -183,6 +186,22 @@ namespace CloudScale.Api
             app.UseSerilogRequestLogging();
 
             app.UseRouting();
+
+            app.UseResponseCaching();
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.GetTypedHeaders().CacheControl =
+                    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+                    {
+                        Public = true,
+                        MaxAge = TimeSpan.FromSeconds(60)
+                    };
+                context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
+                    new string[] {"Accept-Encoding"};
+
+                await next();
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
