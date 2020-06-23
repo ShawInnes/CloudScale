@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using CloudScale.Api.Infrastructure;
+using CloudScale.Api.Infrastructure.HealthChecks;
 using CloudScale.Api.Middleware;
 using CloudScale.ApiClient;
 using CloudScale.Business;
@@ -13,6 +14,7 @@ using CloudScale.Data;
 using CloudScale.Data.Repositories;
 using EntityFrameworkCore.SqlServer.NodaTime.Extensions;
 using FluentValidation.AspNetCore;
+using HealthChecks.UI.Client;
 using Jaeger;
 using Jaeger.Samplers;
 using MediatR;
@@ -127,18 +129,16 @@ namespace CloudScale.Api
                 document.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("bearer"));
             });
 
+            var sqlConnectionString = Configuration.GetConnectionString("CloudScale");
             services.AddDbContext<CloudScaleDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("CloudScale"),
+                options.UseSqlServer(sqlConnectionString,
                     o =>
                     {
                         o.UseNodaTime();
                         o.EnableRetryOnFailure();
                     });
             });
-
-            services.AddHealthChecks()
-                .AddCheck("self", () => HealthCheckResult.Healthy());
 
             services.AddSingleton(Log.Logger);
 
@@ -169,6 +169,18 @@ namespace CloudScale.Api
             });
 
             services.AddOpenTracing();
+
+            services
+                .AddHealthChecks()
+                .AddCheck<AliveHealthCheck>("self", HealthStatus.Unhealthy)
+                .AddSqlServer(sqlConnectionString, name: "database", tags: new[] {"database"});
+
+            services
+                .AddHealthChecksUI(setupSettings: setup =>
+                {
+                    setup.AddHealthCheckEndpoint("self", "/healthz");
+                })
+                .AddInMemoryStorage();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -219,13 +231,16 @@ namespace CloudScale.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-
-                endpoints.MapHealthChecks("/healthz", options: new HealthCheckOptions
+                endpoints.MapHealthChecks("/healthz", new HealthCheckOptions
                 {
-                    Predicate = r => r.Name.Contains("self")
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                 });
+                endpoints.MapHealthChecksUI();
             });
-
+            
+            // app.UseHealthChecksUI(config=> config.UIPath = "/hc-ui");
+            
             app.MigrateDatabase<CloudScaleDbContext>(scopeFactory);
         }
     }

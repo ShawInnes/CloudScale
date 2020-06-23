@@ -3,6 +3,9 @@ https://github.com/PolicyServer/Samples/blob/release/Local/src/Local/Controllers
 https://docs.microsoft.com/en-us/aspnet/core/security/authorization/iauthorizationpolicyprovider?view=aspnetcore-3.1
 https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-3.1
 
+
+https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/monitor-app-health
+
 GitVersion
 Unit Testing
 Behaviour Testing
