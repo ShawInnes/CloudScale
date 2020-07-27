@@ -12,6 +12,9 @@ Behaviour Testing
 Approval Tests
 Convention Tests
 
+Serilog
+https://github.com/destructurama/attributed
+
 Mass Transit
 
 Mediatr
@@ -35,6 +38,9 @@ docker-compose
   Jaeger
   Seq
   RabbitMQ
+
+add
+https://github.com/destructurama/attributed
 
 Snowpack - https://www.snowpack.dev/
 React
